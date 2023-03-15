@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+var cors = require('cors');
 const errorHandlers = require('./middleware/error')
 const connectDB = require('./config/db')
 
@@ -17,6 +18,7 @@ connectDB()
 const tasks = require('./routes/tasks')
 
 const app = express()
+app.use(cors())
 
 app.use(express.json())
 

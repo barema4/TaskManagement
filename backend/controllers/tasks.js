@@ -31,7 +31,7 @@ exports.getTasks = asyncHandler(async (req, res, next) => {
     }
 
     const page = parseInt(req.query.page, 10) || 1
-    const limit = parseInt(req.query.limit, 10) || 25
+    const limit = parseInt(req.query.limit, 10) || 2
     const startIndex = (page - 1) * limit
     query = query.skip(startIndex).limit(limit)
 
@@ -55,11 +55,10 @@ exports.getTasks = asyncHandler(async (req, res, next) => {
         }
     }
 
-        res.status(200).json({
-            success: true,
+        res.status(200).json([
             pagination,
-            data: allTasks
-        })
+            allTasks
+        ])
 })
 
 exports.getTask = asyncHandler(async(req, res, next) => {
