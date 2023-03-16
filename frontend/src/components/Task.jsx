@@ -9,7 +9,7 @@ export const Task = ({task, onDelete, onEdit}) => {
   return (
     <div className='task'>
         <h3>
-            {task.name}<BiEdit onClick={()=>onEdit(task)} style={{ color: 'green', cursor: 'pointer'}}/><FaTimes style={{ color: 'red', cursor: 'pointer'}} onClick={() => onDelete(task._id)}/>
+            {task.name}<BiEdit onClick={()=>onEdit(task)} style={{ color: 'green', cursor: 'pointer', marginLeft: 'auto'}}/><FaTimes style={{ color: 'red', cursor: 'pointer'}} onClick={() => onDelete(task._id)}/>
         </h3>
         <p>{task.description
 }</p>

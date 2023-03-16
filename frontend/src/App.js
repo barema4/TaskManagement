@@ -22,12 +22,10 @@ const App = () => {
   const fetchTasks = async(page) => {
     const res = await fetch(`http://localhost:3000/api/v1/tasks?page=${page || 1}`)
     const data = await res.json()
-    console.log(data, 'data')
     return data
   }
 
   const addTask = async(task) => {
-    console.log('task', task)
     await fetch('http://localhost:3000/api/v1/tasks',
     {
       method: 'POST',
@@ -41,7 +39,6 @@ const App = () => {
   }
 
   const saveEdit = async(task) => {
-    console.log('task...', task)
     const {id, name, description} = task;
     await fetch(`http://localhost:3000/api/v1/tasks/${id}`,
     {
@@ -72,24 +69,35 @@ const App = () => {
         setShowAddTask(!showAddTask)
         showAddTask && setShowEdit(false)
         }} showAdd={showAddTask}/>
-        
+
       {showAddTask && <AddTask onAdd={addTask} saveEdit={saveEdit} dateToEdit={dateToEdit} showEdit={showEdit} /> }
       {tasks.length > 0 ? <Tasks key={tasks} tasks={tasks} onDelete={deleteTask} onEdit={onEdit} /> : 'No Task to show'}
+      <div className="pagination">
+        <div>
+              {tasks.length > 0 && tasks[0]?.hasOwnProperty("prev") ? <Button 
+                  disabled={tasks[0]?.hasOwnProperty("prev") ? false : true}
+                  text="Prev"
+                  onClick={() =>{
+                    const prevPage = tasks[0]?.prev?.page
+                    getTasks(prevPage)
+              }}/> : ''}
 
-      {tasks.length > 0 && tasks[0]?.hasOwnProperty("prev") ? <Button 
-      disabled={tasks[0]?.hasOwnProperty("prev") ? false : true}
-      text="Prev"
-      onClick={() =>{
-        const prevPage = tasks[0]?.prev?.page
-        getTasks(prevPage)
-      }}/> : ''}
-      {tasks.length > 0 && tasks[0]?.hasOwnProperty("next")? <Button 
-      disabled={tasks[0]?.hasOwnProperty("next") ? false : true}
-      text="Next"
-      onClick={() =>{
-        const nextPage = tasks[0]?.next?.page
-        getTasks(nextPage)
-      }}/> : ''}
+        </div>
+        <div>
+            {tasks.length > 0 && tasks[0]?.hasOwnProperty("next")? <Button 
+              disabled={tasks[0]?.hasOwnProperty("next") ? false : true}
+              text="Next"
+              onClick={() =>{
+                const nextPage = tasks[0]?.next?.page
+                getTasks(nextPage)
+              }}/> : ''}
+
+        </div>
+
+      </div>
+     
+
+      
     </div>
   );
 }

@@ -12,10 +12,10 @@ export const AddTask = ({onAdd, saveEdit, dateToEdit, showEdit}) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if(!name){
-            alert('Please add a task')
-            return
+        if(!name && !description){
+            return 'Please add name and description'
         }
+        
         if(showEdit){
             saveEdit({id: dateToEdit._id, name, description})
         } else {
@@ -25,6 +25,7 @@ export const AddTask = ({onAdd, saveEdit, dateToEdit, showEdit}) => {
         setDescription('')
 
     }
+
   return (
     <form className='add-form' onSubmit={onSubmit}>
         <div className='form-control'>
@@ -35,16 +36,19 @@ export const AddTask = ({onAdd, saveEdit, dateToEdit, showEdit}) => {
 
              value={name}
              onChange={(e) =>setName(e.target.value)}
+             required
              />
         </div>
         <div className='form-control'>
             <label>Description</label>
             <input 
              type='textarea'
-             row={4}
+             rows="4"
+             cols="50"
              placeholder='Add Description'
              value={description}
              onChange={(e) =>setDescription(e.target.value)}
+             required
              />
         </div>
 
